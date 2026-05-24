@@ -1,27 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
 
 const Home = () => {
-  let navigate = useNavigate();
   return (
-    <div>
-      <button
-        className="h-20 w-40"
-        onClick={() => {
-          navigate("/signup");
-        }}
-      >
-        Signup Page
-      </button>
-      <button
-        className="h-20 w-40"
-        onClick={() => {
-          navigate("/login");
-        }}
-      >
-        Login Page
-      </button>
-    </div>
+    <div className="w-[100vw] h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025]"></div>
   );
 };
 

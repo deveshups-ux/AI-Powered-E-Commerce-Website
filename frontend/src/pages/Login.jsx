@@ -47,6 +47,8 @@ const Login = () => {
         { withCredentials: true },
       );
       console.log(result.data);
+      getCurrentUser();
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
