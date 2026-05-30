@@ -12,3 +12,18 @@ export const currentUser = async (req, res) => {
     return res.status(500).json({ message: `currentUser error ${error}` });
   }
 };
+
+export const getAdmin = async (req, res) => {
+  try {
+    let adminEmail = req.adminEmail;
+    if (!adminEmail) {
+      return res.status(400).json({ message: " Admin Not Found" });
+    }
+    return res.status(200).json({
+      email: adminEmail,
+      role: "admin",
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "get admin error", error });
+  }
+};

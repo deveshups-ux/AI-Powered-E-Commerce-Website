@@ -100,3 +100,26 @@ export const googleLogin = async (req, res) => {
     return res.status(500).json({ message: `Google Login Error ${error}` });
   }
 };
+
+export const adminLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      let token = await genToken(email);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "Strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+      return res.status(200).json(token);
+    }
+    return res.status(400).json({ message: "Invalid Credentials" });
+  } catch (error) {
+    console.log("Admin Login Error");
+    return res.status(500).json({ message: `Admin login error ${error}` });
+  }
+};
