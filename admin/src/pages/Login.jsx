@@ -3,21 +3,32 @@ import Logo from "../assets/vcartlogo.png";
 import { IoEyeOutline, IoEye } from "react-icons/io5";
 import axios from "axios";
 import { authDataContext } from "../context/AuthContext";
+import { adminDataContext } from "../context/AdminContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let { serverUrl } = useContext(authDataContext);
+
+  const { serverUrl } = useContext(authDataContext);
+  const { adminData, getAdmin } = useContext(adminDataContext);
+
+  const navigate = useNavigate();
 
   const AdminLogin = async (e) => {
     e.preventDefault();
+
     try {
       const result = await axios.post(
         serverUrl + "/api/auth/adminlogin",
         { email, password },
         { withCredentials: true },
       );
+
+      await getAdmin();
+      navigate("/");
+
       console.log(result.data);
     } catch (error) {
       console.log(error);
