@@ -16,7 +16,7 @@ const Login = () => {
       const result = await axios.post(
         serverUrl + "/api/auth/adminlogin",
         { email, password },
-        { withCrendentials: true },
+        { withCredentials: true },
       );
       console.log(result.data);
     } catch (error) {

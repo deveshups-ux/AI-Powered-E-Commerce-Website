@@ -32,7 +32,6 @@ function AdminContext({ children }) {
       <adminDataContext.Provider value={value}>
         {children}
       </adminDataContext.Provider>
-      ;
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import User from "../model/userModel.js";
-import { genToken } from "../config/token.js";
+import { genToken, genToken1 } from "../config/token.js";
 
 export const registration = async (req, res) => {
   try {
@@ -108,7 +108,7 @@ export const adminLogin = async (req, res) => {
       email === process.env.ADMIN_EMAIL &&
       password === process.env.ADMIN_PASSWORD
     ) {
-      let token = await genToken(email);
+      let token = await genToken1(email);
       res.cookie("token", token, {
         httpOnly: true,
         secure: false,
