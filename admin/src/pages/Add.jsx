@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
 import upload from "../assets/upload.jpeg";
 import { useState } from "react";
-
+import { authDataContext } from "../context/AuthContext";
+import axios from "axios";
 function Add() {
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
@@ -15,7 +16,49 @@ function Add() {
   const [subCategory, setSubCategory] = useState("TopWear");
   const [price, setPrice] = useState("");
   const [bestSeller, setBestSeller] = useState(false);
-  const [sizes, setSizes] = useState("");
+  const [sizes, setSizes] = useState([]);
+  const { serverUrl } = useContext(authDataContext);
+
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+    try {
+      let formData = new FormData();
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("price", price);
+      formData.append("category", category);
+      formData.append("subCategory", subCategory);
+      formData.append("bestSeller", bestSeller);
+      formData.append("sizes", JSON.stringify(sizes));
+      formData.append("image1", image1);
+      formData.append("image2", image2);
+      formData.append("image3", image3);
+      formData.append("image4", image4);
+
+      let result = await axios.post(
+        serverUrl + "/api/product/addproduct",
+        formData,
+        { withCredentials: true },
+      );
+
+      console.log(result.data);
+      if (result.data) {
+        setName("");
+        setDescription("");
+        setCategory("Men");
+        setSubCategory("TopWear");
+        setBestSeller(false);
+        setPrice("");
+        setImage1(false);
+        setImage2(false);
+        setImage3(false);
+        setImage4(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="w-[100vw] min-h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] text-[white] overflow-x-hidden relative">
       <Nav />
@@ -23,6 +66,7 @@ function Add() {
 
       <div className="w-[82%] h-[100%] flex items-center justify-start overflow-x-hidden absolute right-0 bottom-[5%] ">
         <form
+          onSubmit={handleAddProduct}
           action=""
           className="w-[100%] md:w-[90%] h-[100%] mt-[70px] flex flex-col gap-[30px] py-[60px] px-[30px] md:px-[60px]"
         >
@@ -112,7 +156,7 @@ function Add() {
 
             <input
               required
-              onClick={(e) => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               value={name}
               type="text"
               placeholder="Type here"
@@ -125,7 +169,7 @@ function Add() {
             </p>
             <textarea
               required
-              onClick={(e) => setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
               value={description}
               type="text"
               placeholder="Type here"
@@ -138,7 +182,8 @@ function Add() {
                 Product Category
               </p>
               <select
-                onClick={(e) => setCategory(e.target.value)}
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
                 name=""
                 id=""
                 className="bg-slate-600 w-[60%] px-[10px] py-[7px] rounded-lg hover:border-[#46d1f7] border-[2px] "
@@ -153,7 +198,8 @@ function Add() {
                 Sub-Category
               </p>
               <select
-                onClick={(e) => setSubCategory(e.target.value)}
+                value={subCategory}
+                onChange={(e) => setSubCategory(e.target.value)}
                 name=""
                 id=""
                 className="bg-slate-600 w-[60%] px-[10px] py-[7px] rounded-lg hover:border-[#46d1f7] border-[2px] "
@@ -170,7 +216,7 @@ function Add() {
             </p>
             <input
               required
-              onClick={(e) => e.target.value}
+              onChange={(e) => setPrice(e.target.value)}
               value={price}
               type="number"
               placeholder="200 Rupees"
@@ -245,8 +291,9 @@ function Add() {
               </div>
             </div>
           </div>
-          <div className="w-[80%] flex items-center justify-start gap-[10px] mt-[20px]">
+          <div className="w-[80%] flex items-censter justify-start gap-[10px] mt-[20px]">
             <input
+              onChange={() => setBestSeller((prev) => !prev)}
               type="checkbox"
               id="checkbox"
               className="w-[25px] h-[25px] cursor-pointer"
