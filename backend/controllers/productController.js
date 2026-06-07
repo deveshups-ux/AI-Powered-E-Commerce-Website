@@ -42,3 +42,24 @@ export const addProduct = async (req, res) => {
     return res.status(500).json({ message: `Add Product ${error}` });
   }
 };
+
+export const listProduct = async (req, res) => {
+  try {
+    const product = await Product.find({});
+    return res.status(200).json(product);
+  } catch (error) {
+    console.log("List Product error");
+    return res.status(500).json({ message: `List Product ${error}` });
+  }
+};
+
+export const removeProduct = async (req, res) => {
+  try {
+    let { id } = req.params;
+    let product = await Product.findByIdAndDelete(id);
+    return res.status(200).json(product);
+  } catch (error) {
+    console.log("Remove Product Errro");
+    return res.status(500).json({ message: `Delete Product ${error}` });
+  }
+};
