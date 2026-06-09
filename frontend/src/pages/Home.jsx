@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
 import Background from "../components/Background";
 import Hero from "../components/Hero";
+import Product from "./Product";
 
 const Home = () => {
   let heroData = [
@@ -28,6 +29,7 @@ const Home = () => {
           heroData={heroData[heroCount]}
         />
       </div>
+      <Product />
     </div>
   );
 };

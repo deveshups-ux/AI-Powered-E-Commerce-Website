@@ -40,16 +40,28 @@ const Nav = () => {
       </div>
       <div className="w-[50%] lg:w-[40%] hidden md:flex">
         <ul className="flex items-center justify-center gap-[19px] text-[white]">
-          <li className="text-[15px] hover:bg-slate-500 cursor-pointer bg-[#000000c9] py-[10px] px-[20px] rounded-2xl">
+          <li
+            className="text-[15px] hover:bg-slate-500 cursor-pointer bg-[#000000c9] py-[10px] px-[20px] rounded-2xl"
+            onClick={() => navigate("/")}
+          >
             HOME
           </li>
-          <li className="text-[15px] hover:bg-slate-500 cursor-pointer bg-[#000000c9] py-[10px] px-[20px] rounded-2xl">
+          <li
+            className="text-[15px] hover:bg-slate-500 cursor-pointer bg-[#000000c9] py-[10px] px-[20px] rounded-2xl"
+            onClick={() => navigate("/collections")}
+          >
             COLLECTIONS
           </li>
-          <li className="text-[15px] hover:bg-slate-500 cursor-pointer bg-[#000000c9] py-[10px] px-[20px] rounded-2xl">
+          <li
+            className="text-[15px] hover:bg-slate-500 cursor-pointer bg-[#000000c9] py-[10px] px-[20px] rounded-2xl"
+            onClick={() => navigate("/about")}
+          >
             ABOUT
           </li>
-          <li className="text-[15px] hover:bg-slate-500 cursor-pointer bg-[#000000c9] py-[10px] px-[20px] rounded-2xl">
+          <li
+            className="text-[15px] hover:bg-slate-500 cursor-pointer bg-[#000000c9] py-[10px] px-[20px] rounded-2xl"
+            onClick={() => navigate("/contact")}
+          >
             CONTACT
           </li>
         </ul>
@@ -94,7 +106,7 @@ const Nav = () => {
           <input
             type="text"
             placeholder="Search Here"
-            className="w-[50%] h-[60%] bg-[#233533] rounded-[30px] px-[20px] placeholder:text-gray-300 text-white text-[18px] outline-none"
+            className="lg:w-[50%] w-[80%] h-[60%] bg-[#233533] rounded-[30px] px-[20px] placeholder:text-gray-300 text-white text-[18px] outline-none"
           />
         </div>
       )}
@@ -130,15 +142,24 @@ const Nav = () => {
         </div>
       )}
       <div className="w-[100vw] h-[90px] flex items-center justify-between px-[20px] fixed bottom-0 left-0 bg-[#191818] md:hidden">
-        <button className="text-[white] flex items-center justify-center flex-col gap-[2px]">
+        <button
+          className="text-[white] flex items-center justify-center flex-col gap-[2px]"
+          onClick={() => navigate("/")}
+        >
           <IoMdHome className="w-[30px] h-[30px] text-[white] md:hidden" />
           Home
         </button>
-        <button className="text-[white] flex items-center justify-center flex-col gap-[2px]">
+        <button
+          className="text-[white] flex items-center justify-center flex-col gap-[2px]"
+          onClick={() => navigate("/collections")}
+        >
           <MdCollections className="w-[30px] h-[30px] text-[white] md:hidden" />
           Collections
         </button>
-        <button className="text-[white] flex items-center justify-center flex-col gap-[2px]">
+        <button
+          className="text-[white] flex items-center justify-center flex-col gap-[2px]"
+          onClick={() => navigate("/contact")}
+        >
           <MdContacts className="w-[30px] h-[30px] text-[white] md:hidden" />
           Contact
         </button>
@@ -146,6 +167,9 @@ const Nav = () => {
           <MdOutlineShoppingCart className="w-[30px] h-[30px] text-[white] md:hidden" />
           Cart
         </button>
+        <p className="absolute w-[18px] h-[18px] flex items-center justify-center bg-white px-[5px] py-[2px] text-black font-semibold rounded-full text-[9px] top-[8px] right-[18px]">
+          10
+        </p>
       </div>
     </div>
   );
