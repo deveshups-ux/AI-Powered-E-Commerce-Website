@@ -6,14 +6,14 @@ import { shopDataContext } from "../context/ShopContext";
 import Card from "../components/Card";
 
 const Collections = () => {
-  const [showFilter, setShowFilter] = useState(false);
   const { products } = useContext(shopDataContext);
-  const [filterProduct, setFilterProduct] = useState([]);
+  const [showFilter, setShowFilter] = useState(false);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
+  const [filterProduct, setFilterProduct] = useState([]);
   const [sortType, setSortType] = useState("Relevant");
 
-  const toogleCategory = (e) => {
+  const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
       setCategory((prev) => prev.filter((item) => item !== e.target.value));
     } else {
@@ -21,7 +21,7 @@ const Collections = () => {
     }
   };
 
-  const toogleSubCategory = (e) => {
+  const toggleSubCategory = (e) => {
     if (subCategory.includes(e.target.value)) {
       setSubCategory((prev) => prev.filter((item) => item !== e.target.value));
     } else {
@@ -43,6 +43,25 @@ const Collections = () => {
     }
     setFilterProduct(productCopy);
   };
+
+  const sortProducts = (e) => {
+    let fbCopy = filterProduct.slice();
+    switch (sortType) {
+      case "low-high":
+        setFilterProduct(fbCopy.sort((a, b) => a.price - b.price));
+        break;
+      case "high-low":
+        setFilterProduct(fbCopy.sort((a, b) => b.price - a.price));
+        break;
+      default:
+        applyFilter();
+        break;
+    }
+  };
+
+  useEffect(() => {
+    sortProducts();
+  }, [sortType]);
 
   useEffect(() => {
     setFilterProduct(products);
@@ -76,7 +95,7 @@ const Collections = () => {
                 type="checkbox"
                 value={"Men"}
                 className="w-3"
-                onChange={toogleCategory}
+                onChange={toggleCategory}
               />{" "}
               Men
             </p>
@@ -85,7 +104,7 @@ const Collections = () => {
                 type="checkbox"
                 value={"Women"}
                 className="w-3"
-                onChange={toogleCategory}
+                onChange={toggleCategory}
               />{" "}
               Women
             </p>
@@ -94,7 +113,7 @@ const Collections = () => {
                 type="checkbox"
                 value={"Kids"}
                 className="w-3"
-                onChange={toogleCategory}
+                onChange={toggleCategory}
               />{" "}
               Kids
             </p>
@@ -110,7 +129,7 @@ const Collections = () => {
                 type="checkbox"
                 value={"TopWear"}
                 className="w-3"
-                onChange={toogleSubCategory}
+                onChange={toggleSubCategory}
               />
               TopWear
             </p>
@@ -119,7 +138,7 @@ const Collections = () => {
                 type="checkbox"
                 value={"BottomWear"}
                 className="w-3"
-                onChange={toogleSubCategory}
+                onChange={toggleSubCategory}
               />
               BottomWear
             </p>
@@ -128,7 +147,7 @@ const Collections = () => {
                 type="checkbox"
                 value={"Winter"}
                 className="w-3"
-                onChange={toogleSubCategory}
+                onChange={toggleSubCategory}
               />{" "}
               Winter
             </p>
@@ -143,6 +162,7 @@ const Collections = () => {
             name=""
             id=""
             className="bg-slate-600 w-[60%] md:w-[200px] h-[50px] px-[10px] text-[white] rounded-lg hover:border-[#46d1f7] border-[2px]"
+            onChange={(e) => setSortType(e.target.value)}
           >
             <option value="relavent" className="w-[100%] h-[100%]">
               Relevant
