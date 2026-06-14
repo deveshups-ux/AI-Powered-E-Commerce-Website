@@ -12,11 +12,13 @@ import { userDataContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { authDataContext } from "../context/AuthContext";
+import { shopDataContext } from "../context/ShopContext";
 
 const Nav = () => {
   let { userData, getCurrentUser } = useContext(userDataContext);
   let { serverUrl } = useContext(authDataContext);
-  const [showSearch, setShowSearch] = useState(false);
+  const { showSearch, setShowSearch, search, setSearch } =
+    useContext(shopDataContext);
   const [showProfile, setShowProfile] = useState(false);
   let navigate = useNavigate();
 
@@ -70,7 +72,10 @@ const Nav = () => {
         {!showSearch && (
           <IoSearchCircleOutline
             className="w-[38px] h-[38px] text-[#000000] cursor-pointer"
-            onClick={() => setShowSearch((prev) => !prev)}
+            onClick={() => {
+              setShowSearch((prev) => !prev);
+              navigate("/collections");
+            }}
           />
         )}
 
@@ -107,6 +112,10 @@ const Nav = () => {
             type="text"
             placeholder="Search Here"
             className="lg:w-[50%] w-[80%] h-[60%] bg-[#233533] rounded-[30px] px-[20px] placeholder:text-gray-300 text-white text-[18px] outline-none"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            value={search}
           />
         </div>
       )}

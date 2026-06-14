@@ -6,7 +6,7 @@ import { shopDataContext } from "../context/ShopContext";
 import Card from "../components/Card";
 
 const Collections = () => {
-  const { products } = useContext(shopDataContext);
+  const { products, search, showSearch } = useContext(shopDataContext);
   const [showFilter, setShowFilter] = useState(false);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
@@ -31,6 +31,13 @@ const Collections = () => {
 
   const applyFilter = () => {
     let productCopy = products.slice();
+
+    if (search && showSearch) {
+      productCopy = productCopy.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase()),
+      );
+    }
+
     if (category.length > 0) {
       productCopy = productCopy.filter((item) =>
         category.includes(item.category),
@@ -69,10 +76,10 @@ const Collections = () => {
 
   useEffect(() => {
     applyFilter();
-  }, [category, subCategory]);
+  }, [category, subCategory, search, showSearch]);
 
   return (
-    <div className="w-[100vw] min-h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] flex items-start flex-col md:flex-row justify-start pt-[70px] overflow-x-hidden z-[2]">
+    <div className="w-[100vw] min-h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] flex items-start flex-col md:flex-row justify-start pt-[70px] overflow-x-hidden z-[2] pb-[110px]">
       <div
         className={`md:w-[30vw] lg:w-[20vw] w-[100vw] md:min-h-[100vh] p-[20px] border-r-[1px] border-gray-400 text-[#aaf5fa] lg:fixed ${showFilter ? "h-[45vh]" : "h-[8vh]"}`}
       >
