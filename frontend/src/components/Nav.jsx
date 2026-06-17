@@ -17,7 +17,7 @@ import { shopDataContext } from "../context/ShopContext";
 const Nav = () => {
   let { userData, getCurrentUser } = useContext(userDataContext);
   let { serverUrl } = useContext(authDataContext);
-  const { showSearch, setShowSearch, search, setSearch } =
+  const { showSearch, setShowSearch, search, setSearch, getCartCount } =
     useContext(shopDataContext);
   const [showProfile, setShowProfile] = useState(false);
   let navigate = useNavigate();
@@ -103,7 +103,7 @@ const Nav = () => {
 
         <MdOutlineShoppingCart className="w-[30px] h-[30px] text-[#000000] cursor-pointer hidden md:block" />
         <p className="absolute w-[18px] h-[18px] flex items-center justify-center bg-black px-[5px] py-[2px] text-white rounded-full text-[9px] top-[10px] right-[23px] hidden md:block">
-          10
+          {getCartCount()}
         </p>
       </div>
       {showSearch && (
@@ -177,7 +177,7 @@ const Nav = () => {
           Cart
         </button>
         <p className="absolute w-[18px] h-[18px] flex items-center justify-center bg-white px-[5px] py-[2px] text-black font-semibold rounded-full text-[9px] top-[8px] right-[18px]">
-          10
+          {getCartCount()}
         </p>
       </div>
     </div>
