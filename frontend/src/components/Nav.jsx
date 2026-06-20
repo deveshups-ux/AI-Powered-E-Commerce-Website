@@ -101,7 +101,10 @@ const Nav = () => {
           </div>
         )}
 
-        <MdOutlineShoppingCart className="w-[30px] h-[30px] text-[#000000] cursor-pointer hidden md:block" />
+        <MdOutlineShoppingCart
+          onClick={() => navigate("/cart")}
+          className="w-[30px] h-[30px] text-[#000000] cursor-pointer hidden md:block"
+        />
         <p className="absolute w-[18px] h-[18px] flex items-center justify-center bg-black px-[5px] py-[2px] text-white rounded-full text-[9px] top-[10px] right-[23px] hidden md:block">
           {getCartCount()}
         </p>
@@ -172,7 +175,10 @@ const Nav = () => {
           <MdContacts className="w-[30px] h-[30px] text-[white] md:hidden" />
           Contact
         </button>
-        <button className="text-[white] flex items-center justify-center flex-col gap-[2px]">
+        <button
+          onClick={() => navigate("cart")}
+          className="text-[white] flex items-center justify-center flex-col gap-[2px]"
+        >
           <MdOutlineShoppingCart className="w-[30px] h-[30px] text-[white] md:hidden" />
           Cart
         </button>
