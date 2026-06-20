@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Title from "../components/Title";
 import { shopDataContext } from "../context/ShopContext";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import CartTotal from "../components/CartTotal";
 
 function Cart() {
   const { products, currency, cartItem, updateQuantity } =
@@ -82,6 +83,23 @@ function Cart() {
             </div>
           );
         })}
+      </div>
+      <div className="flex justify-start items-end my-20">
+        <div className="w-full sm:w-[450px]">
+          <CartTotal />
+          <button
+            className="text-[18px] hover:bg-slate-500 cursor-pointer bg-[#51808048] py-[10px] px-[50px] rounded-2xl text-white flex items-center justify-center gap-[20px] border-[1px] border-[#80808049] ml-[30px] mt-[20px]"
+            onClick={() => {
+              if (cartData.length > 0) {
+                navigate("/placeorder");
+              } else {
+                console.log("your cart is empty");
+              }
+            }}
+          >
+            PROCEED TO CHECKOUT
+          </button>
+        </div>
       </div>
     </div>
   );
