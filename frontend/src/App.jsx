@@ -107,12 +107,12 @@ const App = () => {
           }
         />
         <Route
-          path="/placeroder"
+          path="/placeorder"
           element={
             userData ? (
-              <Navigate to={location.state?.from || "/"} />
-            ) : (
               <PlaceOrder />
+            ) : (
+              <Navigate to={location.state?.from || "/"} />
             )
           }
         />
