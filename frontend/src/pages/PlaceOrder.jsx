@@ -5,9 +5,11 @@ import razorpay from "../assets/razorpay.png";
 import { shopDataContext } from "../context/ShopContext";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
+  let navigate = useNavigate();
   const { cartItem, setCartItem, getCartAmount, delivery_fee, products } =
     useContext(shopDataContext);
   const { serverUrl } = useContext(authDataContext);
@@ -62,6 +64,9 @@ const PlaceOrder = () => {
           console.log(result.data);
           if (result.data) {
             setCartItem({});
+            navigate("/order");
+          } else {
+            console.log(result.data.messege);
           }
 
           break;
