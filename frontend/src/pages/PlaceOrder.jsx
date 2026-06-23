@@ -60,6 +60,9 @@ const PlaceOrder = () => {
             { withCredentials: true },
           );
           console.log(result.data);
+          if (result.data) {
+            setCartItem({});
+          }
 
           break;
 
