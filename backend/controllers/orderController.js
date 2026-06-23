@@ -1,3 +1,4 @@
+import Order from "../model/orderModel.js";
 import User from "../model/userModel.js";
 
 export const placeOrder = async (req, res) => {
@@ -9,7 +10,7 @@ export const placeOrder = async (req, res) => {
       amount,
       address,
       userId,
-      paymentMethod: "COD",
+      paymentMethod: "cod",
       payment: false,
       date: Date.now(),
     };
