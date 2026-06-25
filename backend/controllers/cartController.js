@@ -5,7 +5,7 @@ export const addToCart = async (req, res) => {
     const { itemId, size } = req.body;
     const userData = await User.findById(req.userId);
 
-    //check if user exixts
+    //check if user exits
     if (!userData) {
       return res.status(404).json({ message: "User not found" });
     }
