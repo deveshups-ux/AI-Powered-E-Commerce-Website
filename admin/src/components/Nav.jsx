@@ -5,6 +5,7 @@ import logo from "../assets/vcartlogo.png";
 import { adminDataContext } from "../context/AdminContext";
 import axios from "axios";
 import { authDataContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 function Nav() {
   let navigate = useNavigate();
@@ -17,10 +18,12 @@ function Nav() {
         withCredentials: true,
       });
       console.log(result.data);
+      toast.success("Logout Successfully");
       getAdmin();
       navigate("/");
     } catch (error) {
       console.log(error);
+      toast.error("Logout Failed");
     }
   };
   return (

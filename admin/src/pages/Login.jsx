@@ -5,6 +5,7 @@ import axios from "axios";
 import { authDataContext } from "../context/AuthContext";
 import { adminDataContext } from "../context/AdminContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -30,8 +31,10 @@ const Login = () => {
       navigate("/");
 
       console.log(result.data);
+      toast.success("Admin Login successfully");
     } catch (error) {
       console.log(error);
+      toast.error("Admin Login Failed");
     }
   };
 
