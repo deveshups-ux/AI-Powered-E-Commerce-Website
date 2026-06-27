@@ -13,6 +13,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import PlaceOrder from "./pages/PlaceOrder";
 import Order from "./pages/Order";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   let { userData } = useContext(userDataContext);
@@ -123,6 +124,7 @@ const App = () => {
             userData ? <Order /> : <Navigate to={location.state?.from || "/"} />
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
