@@ -6,18 +6,20 @@ import { authDataContext } from "../context/AuthContext";
 import { adminDataContext } from "../context/AdminContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loading from "../components/Loading";
 
 const Login = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const { serverUrl } = useContext(authDataContext);
   const { adminData, getAdmin } = useContext(adminDataContext);
 
   const navigate = useNavigate();
 
   const AdminLogin = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     try {
@@ -28,12 +30,14 @@ const Login = () => {
       );
 
       await getAdmin();
+      setLoading(false);
       navigate("/");
 
       console.log(result.data);
       toast.success("Admin Login successfully");
     } catch (error) {
       console.log(error);
+      setLoading(false);
       toast.error("Admin Login Failed");
     }
   };
@@ -93,7 +97,7 @@ const Login = () => {
             </div>
 
             <button className="w-full h-[50px] bg-[#6060f5] rounded-lg mt-[20px] text-[17px] font-semibold hover:bg-[#4c4cf0] transition-all">
-              Login
+              {loading ? <Loading /> : "Login"}
             </button>
           </div>
         </form>

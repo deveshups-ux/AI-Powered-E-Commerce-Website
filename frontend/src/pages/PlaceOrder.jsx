@@ -5,10 +5,13 @@ import razorpay from "../assets/razorpay.png";
 import { shopDataContext } from "../context/ShopContext";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../../admin/src/components/Loading";
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
+  const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   const { cartItem, setCartItem, getCartAmount, delivery_fee, products } =
     useContext(shopDataContext);
@@ -57,6 +60,7 @@ const PlaceOrder = () => {
   };
 
   const onSubmitHandler = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       let orderItems = [];
@@ -88,6 +92,8 @@ const PlaceOrder = () => {
             { withCredentials: true },
           );
           console.log(result.data);
+          setLoading(false);
+          toast.success("Ordered Succesfully");
           if (result.data) {
             setCartItem({});
             navigate("/order");
@@ -111,6 +117,8 @@ const PlaceOrder = () => {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      toast.error("Ordered Failed");
     }
   };
 
@@ -227,7 +235,7 @@ const PlaceOrder = () => {
               type="submit"
               className="text-[18px] active:bg-slate-500 cursor-pointer bg-[#3bcee848] py-[10px] px-[50px] rounded-2xl text-white flex items-center justify-center gap-[20px] absolute lg:right-[20%] bottom-[10%] right-[35%] border border-[#80808049] ml-[30px] mt-[20px]"
             >
-              PLACE ORDER
+              {loading ? <Loading /> : "PLACE ORDER"}
             </button>
           </div>
         </form>

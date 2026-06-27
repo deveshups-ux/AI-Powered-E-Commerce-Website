@@ -6,18 +6,23 @@ import { IoEye } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../utils/Firebase";
 import { userDataContext } from "../context/UserContext";
+import Loading from "../../../admin/src/components/Loading";
 const Registration = () => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   let { serverUrl } = useContext(authDataContext);
   let { getCurrentUser } = useContext(userDataContext);
   let navigate = useNavigate();
   const handleSignup = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const result = await axios.post(
@@ -26,6 +31,7 @@ const Registration = () => {
         { withCredentials: true },
       );
       console.log(result.data);
+      setLoading(false);
       getCurrentUser();
       navigate("/");
     } catch (error) {
@@ -35,6 +41,7 @@ const Registration = () => {
 
   const googleSignup = async (req, res) => {
     try {
+      setLoading(true);
       let response = await signInWithPopup(auth, provider);
       let user = response.user;
       let name = user.displayName;
@@ -46,10 +53,15 @@ const Registration = () => {
         { withCredentials: true },
       );
       console.log(result.data);
+      setLoading(false);
       getCurrentUser();
+      toast.success("Signup Succesfully");
+
       navigate("/");
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      toast.error("Signup Failed");
     }
   };
 
@@ -128,7 +140,7 @@ const Registration = () => {
             )}
 
             <button className="w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold">
-              Create Account
+              {loading ? <Loading /> : "Create Account"}
             </button>
             <p className="flex gap-[10px]">
               You have any account?{" "}

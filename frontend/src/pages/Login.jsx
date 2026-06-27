@@ -6,19 +6,24 @@ import { IoEye } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../utils/Firebase";
 import { userDataContext } from "../context/UserContext";
+import Loading from "../../../admin/src/components/Loading";
 
 const Login = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   let { serverUrl } = useContext(authDataContext);
   let { getCurrentUser } = useContext(userDataContext);
 
   let navigate = useNavigate();
   const handleLogin = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       let result = await axios.post(
@@ -28,13 +33,18 @@ const Login = () => {
       );
       console.log(result.data);
       getCurrentUser();
+      setLoading(false);
+      toast.success("Login Succesfully");
       navigate("/");
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      toast.error("Login Failed");
     }
   };
 
   const googleSignup = async (req, res) => {
+    setLoading(true);
     try {
       let response = await signInWithPopup(auth, provider);
       let user = response.user;
@@ -48,9 +58,13 @@ const Login = () => {
       );
       console.log(result.data);
       getCurrentUser();
+      setLoading(false);
+      toast.success("Login Succesfully");
       navigate("/");
     } catch (error) {
       console.log(error);
+      setLoading(false);
+      toast.error("Login Error");
     }
   };
 
@@ -121,7 +135,7 @@ const Login = () => {
             )}
 
             <button className="w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold">
-              Login
+              {loading ? <Loading /> : "Login"}
             </button>
             <p className="flex gap-[10px]">
               You haven't any account?

@@ -144,10 +144,22 @@ const Nav = () => {
                 LogOut
               </li>
             )}
-            <li className="w-full hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer">
+            <li
+              onClick={() => {
+                navigate("/order");
+                setShowProfile(false);
+              }}
+              className="w-full hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer"
+            >
               Orders
             </li>
-            <li className="w-full hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer">
+            <li
+              onClick={() => {
+                navigate("/about");
+                setShowProfile(false);
+              }}
+              className="w-full hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer"
+            >
               About
             </li>
           </ul>
