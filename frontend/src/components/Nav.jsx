@@ -139,8 +139,8 @@ const Nav = () => {
             )}
             {userData && (
               <li
-                onClick={() => {
-                 await handleLogout();
+                onClick={async () => {
+                  await handleLogout();
 
                   setShowProfile(false);
                 }}
