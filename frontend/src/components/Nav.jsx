@@ -15,7 +15,7 @@ import { authDataContext } from "../context/AuthContext";
 import { shopDataContext } from "../context/ShopContext";
 
 const Nav = () => {
-  let { userData, getCurrentUser } = useContext(userDataContext);
+  let { userData, getCurrentUser, setUserData } = useContext(userDataContext);
   let { serverUrl } = useContext(authDataContext);
   const { showSearch, setShowSearch, search, setSearch, getCartCount } =
     useContext(shopDataContext);
@@ -28,7 +28,7 @@ const Nav = () => {
         withCredentials: true,
       });
       console.log(result.data);
-      await getCurrentUser();
+      setUserData(null);
       navigate("/login");
     } catch (error) {
       console.log(error);
