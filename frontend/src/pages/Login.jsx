@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../utils/Firebase";
 import { userDataContext } from "../context/UserContext";
-import Loading from "../../../admin/src/components/Loading";
+import Loading from "../components/Loading";
 
 const Login = () => {
   const [show, setShow] = useState(false);
