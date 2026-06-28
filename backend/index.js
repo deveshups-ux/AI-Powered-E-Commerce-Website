@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["https://onecart-frontend-rjar.onrender.com", "http://localhost:5174"],
+    origin: ["https://onecart-frontend-rjar.onrender.com", "https://onecart-admin-atki.onrender.com"],
     credentials: true,
   }),
 );
