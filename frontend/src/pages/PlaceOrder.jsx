@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loading";
+
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
   const [loading, setLoading] = useState(false);

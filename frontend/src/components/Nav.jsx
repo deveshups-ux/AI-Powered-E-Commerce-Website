@@ -140,6 +140,7 @@ const Nav = () => {
               <li
                 onClick={() => {
                   handleLogout();
+                  navigate("/login")
                   setShowProfile(false);
                 }}
                 className="w-full hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer"
