@@ -1,10 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import ai from "../assets/ai.png";
 import { shopDataContext } from "../context/ShopContext";
 import { useNavigate } from "react-router-dom";
+import click from "../assets/click.mp3";
 const Ai = () => {
   let { showSearch, setShowSearch } = useContext(shopDataContext);
+  const [activeAi, setActiveAi] = useState(false);
   let navigate = useNavigate();
+  let clickSound = new Audio(click);
 
   function speak(message) {
     let utterance = new SpeechSynthesisUtterance(message);
@@ -84,13 +87,35 @@ const Ai = () => {
       toast.error;
     }
   };
+  recognition.onend = () => {
+    setActiveAi(false);
+  };
 
   return (
     <div
-      onClick={() => recognition.start()}
+      onClick={() => {
+        recognition.start();
+        clickSound.play();
+        setActiveAi(true);
+      }}
       className="fixed lg:bottom-[20px] md:bottom-[40px] bottom-[80px] left-[2%]"
     >
-      <img src={ai} alt="" className="w-[100px] cursor-pointer " />
+      <img
+        src={ai}
+        alt=""
+        className={`w-[100px] cursor-pointer ${
+          activeAi
+            ? "translate-x-[10%] translate-y-[-10%] scale-125"
+            : "translate-x-[0] translate-y-[0] scale-100"
+        } transition-transform`}
+        style={{
+          filter: `${
+            activeAi
+              ? "drop-shadow(0px 0px 30px #00d2fc)"
+              : "drop-shadow(0px 0px 20px black)"
+          }`,
+        }}
+      />
     </div>
   );
 };
