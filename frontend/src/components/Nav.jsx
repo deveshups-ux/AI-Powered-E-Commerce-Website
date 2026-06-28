@@ -22,7 +22,7 @@ const Nav = () => {
   const [showProfile, setShowProfile] = useState(false);
   let navigate = useNavigate();
 
-  const handleLogout = async (req, res) => {
+  const handleLogout = async () => {
     try {
       let result = await axios.get(serverUrl + "/api/auth/logout", {
         withCredentials: true,
@@ -127,7 +127,10 @@ const Nav = () => {
           <ul className="w-full h-full flex flex-col items-start justify-around text-[17px] py-[10px] text-white">
             {!userData && (
               <li
-                onClick={() => navigate("/login")}
+                onClick={() => {
+                  navigate("/login");
+                  setShowProfile(false);
+                }}
                 className="w-full hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer"
               >
                 Login
@@ -188,7 +191,7 @@ const Nav = () => {
           Contact
         </button>
         <button
-          onClick={() => navigate("cart")}
+          onClick={() => navigate("/cart")}
           className="text-[white] flex items-center justify-center flex-col gap-[2px]"
         >
           <MdOutlineShoppingCart className="w-[30px] h-[30px] text-[white] md:hidden" />
