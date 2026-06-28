@@ -29,6 +29,7 @@ const Nav = () => {
       });
       console.log(result.data);
       getCurrentUser();
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -139,8 +140,8 @@ const Nav = () => {
             {userData && (
               <li
                 onClick={() => {
-                  handleLogout();
-                  navigate("/login")
+                 await handleLogout();
+
                   setShowProfile(false);
                 }}
                 className="w-full hover:bg-[#2f2f2f] px-[15px] py-[10px] cursor-pointer"
