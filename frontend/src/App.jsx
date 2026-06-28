@@ -14,6 +14,7 @@ import Cart from "./pages/Cart";
 import PlaceOrder from "./pages/PlaceOrder";
 import Order from "./pages/Order";
 import NotFound from "./pages/NotFound";
+import Ai from "./components/Ai";
 
 const App = () => {
   let { userData } = useContext(userDataContext);
@@ -126,6 +127,7 @@ const App = () => {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Ai />
     </>
   );
 };
