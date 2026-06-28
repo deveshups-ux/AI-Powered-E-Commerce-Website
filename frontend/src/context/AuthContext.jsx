@@ -3,7 +3,7 @@ import { createContext } from "react";
 export const authDataContext = createContext();
 
 function AuthContext({ children }) {
-  const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:8000";
+  const serverUrl = "https://onecart-backend-3oxq.onrender.com";
 
   const value = {
     serverUrl,
