@@ -1,8 +1,12 @@
 import React, { useContext, useState } from "react";
 import Logo from "../assets/vcartlogo.png";
 import google from "../assets/google.png";
-import { IoEyeOutline } from "react-icons/io5";
-import { IoEye } from "react-icons/io5";
+import {
+  IoEyeOutline,
+  IoEye,
+  IoMailOutline,
+  IoLockClosedOutline,
+} from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
@@ -22,9 +26,10 @@ const Login = () => {
   let { getCurrentUser } = useContext(userDataContext);
 
   let navigate = useNavigate();
+
   const handleLogin = async (e) => {
-    setLoading(true);
     e.preventDefault();
+    setLoading(true);
     try {
       let result = await axios.post(
         serverUrl + "/api/auth/login",
@@ -43,7 +48,7 @@ const Login = () => {
     }
   };
 
-  const googleSignup = async (req, res) => {
+  const googleSignup = async () => {
     setLoading(true);
     try {
       let response = await signInWithPopup(auth, provider);
@@ -69,83 +74,103 @@ const Login = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] text-[white] flex flex-col items-center justify-start">
+    <div className="relative w-[100vw] min-h-[100vh] bg-[#0B0F14] text-white flex flex-col items-center justify-start overflow-hidden">
+      {/* ambient glow */}
+      <div className="pointer-events-none absolute -top-40 -left-40 w-[480px] h-[480px] rounded-full bg-[#6060f5]/25 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -right-40 w-[480px] h-[480px] rounded-full bg-[#E8A33D]/15 blur-[120px]" />
+
+      {/* navbar */}
       <div
-        className="w-[100%] h-[80px] flex items-center justify-start px-[30px] gap-[10px] cursor-pointer"
-        onClick={() => {
-          navigate("/");
-        }}
+        className="relative z-10 w-full h-[80px] flex items-center justify-start px-[30px] gap-[10px] cursor-pointer"
+        onClick={() => navigate("/")}
       >
-        <img className="w-[40px]" src={Logo} alt="" />
-        <h1 className="text-[22px] font-sans ">OneCart</h1>
+        <img className="w-[38px]" src={Logo} alt="OneCart logo" />
+        <h1 className="text-[22px] font-semibold tracking-tight">OneCart</h1>
       </div>
 
-      <div className="w-[100%] h-[100px] flex items-center justify-center flex-col gap-[10px]">
-        <span className="text-[25px] font-semibold">Login Page</span>
-        <span className="text-[16px]">
-          Welcome to OneCart, Place your order
+      {/* heading */}
+      <div className="relative z-10 w-full flex items-center justify-center flex-col gap-[8px] mt-[10px] mb-[30px] px-[20px] text-center">
+        <span className="text-[28px] sm:text-[32px] font-bold tracking-tight">
+          Welcome back
+        </span>
+        <span className="text-[15px] text-[#9AA4AF]">
+          Log in to OneCart and pick up where you left off
         </span>
       </div>
-      <div className="max-w-[600px] w-[90%] h-[500px] bg-[#00000025] border-[1px] border-[#96969635] backdrop-blur-2xl rounded-lg shadow-lg flex items-center justify-center">
+
+      {/* card */}
+      <div className="relative z-10 max-w-[420px] w-[90%] bg-[#12161C]/70 border border-white/10 backdrop-blur-xl rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.45)] p-[32px] mb-[40px]">
         <form
           onSubmit={handleLogin}
-          action=""
-          className="w-[90%] h-[90%] flex flex-col items-center justify-start gap-[20px]"
+          className="w-full flex flex-col gap-[18px]"
         >
-          <div
+          <button
+            type="button"
             onClick={googleSignup}
-            className="w-[90%] h-[50px] bg-[#42656cae] rounded-lg flex items-center justify-center gap-[10px] py-[20px] cursor-pointer"
+            className="w-full h-[48px] bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl flex items-center justify-center gap-[10px] transition-colors duration-200 font-medium"
           >
-            <img src={google} alt="" className="w-[20px]" /> Registration with
-            Google
-          </div>
-          <div className="w-[100%] h-[20px] flex items-center justify-center gap-[10px]">
-            <div className="w-[40%] h-[1px] bg-[#96969635]"></div>
-            OR
-            <div className="w-[40%] h-[1px] bg-[#96969635]"></div>
-          </div>
-          <div className="w-[90%] h-[400px] flex flex-col items-center justify-center gap-[15px] relative">
-            <input
-              type="text"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              className="w-[100%] h-[50px] border-[2px] border-[#96969635] backdrop-blur-sm rounded-lg shadow-lg bg-transparent placeholder-[#ffffffc7] px-[20px] font-semibold"
-              placeholder="Email"
-              required
-            />
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              type={show ? "text" : "password"}
-              className="w-[100%] h-[50px] border-[2px] border-[#96969635] backdrop-blur-sm rounded-lg shadow-lg bg-transparent placeholder-[#ffffffc7] px-[20px] font-semibold"
-              placeholder="Password"
-              required
-            />
-            {!show && (
-              <IoEyeOutline
-                className="w-[20px] h-[20px] absolute cursor-pointer bottom-[57%] right-[5%] "
-                onClick={() => setShow((prev) => !prev)}
-              />
-            )}
-            {show && (
-              <IoEye
-                className="w-[20px] h-[20px] absolute cursor-pointer bottom-[57%] right-[5%]"
-                onClick={() => setShow((prev) => !prev)}
-              />
-            )}
+            <img src={google} alt="" className="w-[18px]" />
+            Continue with Google
+          </button>
 
-            <button className="w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold">
+          <div className="w-full flex items-center gap-[12px] text-[12px] text-[#6B7480]">
+            <div className="flex-1 h-[1px] bg-white/10" />
+            OR
+            <div className="flex-1 h-[1px] bg-white/10" />
+          </div>
+
+          <div className="w-full flex flex-col gap-[16px]">
+            <div className="relative">
+              <IoMailOutline className="absolute left-[14px] top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-[#6B7480]" />
+              <input
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                className="w-full h-[48px] border border-white/10 focus:border-[#6060f5]/60 rounded-xl bg-white/[0.03] placeholder-[#6B7480] pl-[42px] pr-[16px] text-[15px] outline-none transition-colors duration-200"
+                placeholder="Email"
+                required
+              />
+            </div>
+
+            <div className="relative">
+              <IoLockClosedOutline className="absolute left-[14px] top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-[#6B7480]" />
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                type={show ? "text" : "password"}
+                className="w-full h-[48px] border border-white/10 focus:border-[#6060f5]/60 rounded-xl bg-white/[0.03] placeholder-[#6B7480] pl-[42px] pr-[42px] text-[15px] outline-none transition-colors duration-200"
+                placeholder="Password"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShow((prev) => !prev)}
+                className="absolute right-[14px] top-1/2 -translate-y-1/2 text-[#6B7480] hover:text-white transition-colors"
+                tabIndex={-1}
+              >
+                {show ? (
+                  <IoEye className="w-[18px] h-[18px]" />
+                ) : (
+                  <IoEyeOutline className="w-[18px] h-[18px]" />
+                )}
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full h-[48px] bg-[#6060f5] hover:bg-[#4f4fe0] disabled:opacity-70 rounded-xl flex items-center justify-center text-[16px] font-semibold transition-colors duration-200 mt-[4px]"
+            >
               {loading ? <Loading /> : "Login"}
             </button>
-            <p className="flex gap-[10px]">
-              You haven't any account?
+
+            <p className="flex items-center justify-center gap-[6px] text-[14px] text-[#9AA4AF] mt-[4px]">
+              Don't have an account?
               <span
-                className="text-[#5555f6cf] text-[17px] font-semibold cursor-pointer"
-                onClick={() => {
-                  navigate("/signup");
-                }}
+                className="text-[#8888ff] hover:text-[#a5a5ff] font-semibold cursor-pointer transition-colors"
+                onClick={() => navigate("/signup")}
               >
-                Create New Account
+                Create one
               </span>
             </p>
           </div>
