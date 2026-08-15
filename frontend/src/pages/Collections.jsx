@@ -6,7 +6,7 @@ import { shopDataContext } from "../context/ShopContext";
 import Card from "../components/Card";
 
 const Collections = () => {
-  const { products, search, showSearch } = useContext(shopDataContext);
+  const { products, search, showSearch, loading } = useContext(shopDataContext);
   const [showFilter, setShowFilter] = useState(false);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
@@ -183,15 +183,26 @@ const Collections = () => {
           </select>
         </div>
         <div className="lg:w-[80vw] md:w-[60vw] w-[100vw] min-h-[70vh] flex items-center justify-center flex-wrap gap-[30px]">
-          {filterProduct.map((item, index) => (
-            <Card
-              key={index}
-              id={item._id}
-              name={item.name}
-              price={item.price}
-              image={item.image1}
-            />
-          ))}
+          {loading ? (
+            Array.from({ length: 8 }).map((_, index) => (
+              <div
+                key={index}
+                className="w-[200px] h-[280px] bg-slate-700 rounded-lg animate-pulse"
+              />
+            ))
+          ) : filterProduct.length === 0 ? (
+            <p className="text-white text-lg">No products found.</p>
+          ) : (
+            filterProduct.map((item, index) => (
+              <Card
+                key={index}
+                id={item._id}
+                name={item.name}
+                price={item.price}
+                image={item.image1}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

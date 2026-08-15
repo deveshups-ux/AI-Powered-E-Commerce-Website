@@ -9,6 +9,7 @@ const ShopContext = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [cartItem, setCartItem] = useState({});
   const { serverUrl } = useContext(authDataContext);
   const { userData } = useContext(userDataContext);
@@ -16,12 +17,15 @@ const ShopContext = ({ children }) => {
   let delivery_fee = 40;
 
   let getProducts = async () => {
+    setLoading(true);
     try {
       let result = await axios.get(serverUrl + "/api/product/list");
       console.log(result.data);
       setProducts(result.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -147,6 +151,7 @@ const ShopContext = ({ children }) => {
     setCartItem,
     updateQuantity,
     getCartAmount,
+    loading,
   };
   return (
     <>
